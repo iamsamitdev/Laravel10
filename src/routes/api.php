@@ -1,26 +1,16 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\AuthController;
 
-// Route Group api/v1
-Route::group(['prefix' => 'v1'], function () {
+// Route for register
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+
+// Route Group api/v1 with middleware auth:sanctum
+Route::group(['prefix' => 'v1','middleware' => 'auth:sanctum'], function () {
     // Route get all products
     Route::resource('/products', ProductController::class);
+    Route::post('/logout', [AuthController::class, 'logout']);
 });
-
-// Route get user
-// Route::get('/user',function (Request $request) {
-//     // retunr user parameter
-//     return "Hello User";
-// });
-
-// Route::post('/user',function (Request $request) {
-//     // retunr user parameter
-//     return "Post User";
-// });
-
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });

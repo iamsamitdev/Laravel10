@@ -22,30 +22,49 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        return "Post Product";
+        // กำหนดตัวแปรรับค่าจากฟอร์ม
+        $data_product = array(
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'slug' => $request->input('slug'),
+            'price' => $request->input('price'),
+            'user_id' => $request->input('user_id')
+        );
+
+        return Product::create($data_product);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show($id)
     {
-        return "Show product";
+        return Product::find($id);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $id)
     {
-        return "Update Product";
+        $data_product = array(
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'slug' => $request->input('slug'),
+            'price' => $request->input('price')
+        );
+
+        $product = Product::find($id);
+        $product->update($data_product);
+
+        return $product;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        return "Delete Product";
+        return Product::destroy($id);
     }
 }
