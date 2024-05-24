@@ -9,7 +9,37 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *     path="/api/v1/products",
+     *     tags={"Products"},
+     *     summary="All products",
+     *     description="Multiple status values can be provided with comma separated string",
+     *     operationId="findPetsByStatus",
+     *     @OA\Parameter(
+     *         name="products",
+     *         in="query",
+     *         description="All products",
+     *         required=true,
+     *         explode=true,
+     *         @OA\Schema(
+     *             default="available",
+     *             type="string",
+     *             enum={"available", "pending", "sold"},
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid status value"
+     *     ),
+     *      security={
+     *         {"bearer_token": {}}
+     *     },
+     * )
      */
     public function index()
     {
